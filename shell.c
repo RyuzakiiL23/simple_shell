@@ -1,16 +1,14 @@
 #include "main.h"
 
 /**
-* main - creates a simple shell
-*
-* Return: always 0 success
-*/
-
+ * main - creates a simple shell
+ *
+ * Return: always 0 on success
+ */
 int main(void)
 {
 	pid_t pid;
 	char cmd[MAX_LEN];
-	char *argv[MAX_LEN];
 	ssize_t c_read = 0;
 
 	while (1)
@@ -23,12 +21,14 @@ int main(void)
 			perror("Error reading");
 			exit(1);
 		}
+			/*ctrl D*/
 		else if (c_read == 0)
 		{
 			_putchar('\n');
 			break;
 		}
 		cmd[c_read - 1] = '\0';
+
 		pid = fork();
 		if (pid == -1)
 		{
@@ -37,15 +37,11 @@ int main(void)
 		}
 		else if (pid == 0)
 		{
-			argv[0] = cmd;
-			argv[1] = NULL;
-			if (execve(cmd, argv, NULL) == -1)
-			{
-				perror("Error executing");
-				exit(2);
-			}
+			execute_command(cmd);
 		}
+
 		wait(NULL);
 	}
+
 	return (0);
 }
