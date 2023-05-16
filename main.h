@@ -14,5 +14,10 @@ void _putchar(char c);
 /****************TASK1_PROTOTYPES******************/
 
 void execute_command(char *cmd);
+char *_path(char *cmd);
+void _exec(char *f_path, char *cmd);
+int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
+
 
 #endif
