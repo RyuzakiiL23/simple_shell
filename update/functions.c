@@ -1,21 +1,21 @@
 #include "main.h"
 
 /*--------------- Function prototypes -----------------*/
-void removeTrailingNewline(char* str);
-void tokenizeCommandLine(char* cmd, char** arguments);
-void executeCommand(char* executable, char** arguments, char* envp[]);
-void performFork(char* cmd, char *arguments[], char* envp[]);
+void removeTrailingNewline(char *str);
+void tokenizeCommandLine(char *cmd, char **arguments);
+void executeCommand(char *executable, char **arguments, char *envp[]);
+void performFork(char *cmd, char *arguments[], char *envp[]);
 
 
 /*--------------- Function definitions-----------------*/
 
-/*
+/**
 * removeTrailingNewline - removes new lines
 * @str: string to be modified
 * Return: returns a pointer to the modified string
 */
 
-void removeTrailingNewline(char* str)
+void removeTrailingNewline(char *str)
 {
 	int length = _strlen(str);
 
@@ -31,10 +31,10 @@ void removeTrailingNewline(char* str)
 * @arguments: the arguments of our cmd
 */
 
-void tokenizeCommandLine(char* cmd, char** arguments)
+void tokenizeCommandLine(char *cmd, char **arguments)
 {
-	char* token = strtok(cmd, " ");
-	char* executable = token;
+	char *token = strtok(cmd, " ");
+	char *executable = token;
 	int arg_count = 0;
 
 	while (executable != NULL)
@@ -53,7 +53,7 @@ void tokenizeCommandLine(char* cmd, char** arguments)
 * @envp: the environment
 */
 
-void executeCommand(char* executable, char** arguments, char* envp[])
+void executeCommand(char *executable, char **arguments, char *envp[])
 {
 	if (execve(executable, arguments, envp) == -1)
 	{
@@ -69,7 +69,7 @@ void executeCommand(char* executable, char** arguments, char* envp[])
 * @envp: the environment
 */
 
-void performFork(char* cmd, char *arguments[], char* envp[])
+void performFork(char *cmd, char *arguments[], char *envp[])
 {
 	char *path[MAX_LEN];
 	char *dir, *key, *value;
