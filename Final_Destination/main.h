@@ -10,11 +10,13 @@
 
 #define MAX_LEN 1024
 
+extern char **environ;
+
 /*--------mainF-------*/
 void removeTrailingNewline(char *str);
 void tokenizeCommandLine(char *cmd, char **arguments);
 void executeCommand(char *executable, char **arguments);
-void performFork(char *cmd, char *arguments[]);
+void performFork(char *cmd, char *arguments[], char **new_environ);
 
 
 /*-------staticLib--------*/
@@ -26,5 +28,9 @@ int _strcmp(char *s1, char *s2);
 const char *_strchr(const char *s, char c);
 char *_strtok(char *str, const char *delim);
 ssize_t *_getline(char **lineptr, size_t *n, FILE *filename);
+char **env(char **environ);
+
+size_t my_strspn(const char* str, const char* accept);
+size_t my_strcspn(const char* str, const char* reject);
 
 #endif
