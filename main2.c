@@ -28,6 +28,7 @@ void shell_non_interactive(void)
 		}
 		if (_strcmp(cmd, _exit) == 0)
 		{
+			free(cmd);
 			exit(EXIT_SUCCESS);
 		}
 		else if (c_read == EOF)

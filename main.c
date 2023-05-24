@@ -30,6 +30,7 @@ void shell_interactive(void)
 			}
 			if (_strcmp(cmd, _exit) == 0)
 			{
+				free(cmd);
 				exit(EXIT_SUCCESS);
 			}
 			if (c_read == (unsigned long int) EOF)

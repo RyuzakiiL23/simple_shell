@@ -83,12 +83,14 @@ void removeTrailingNewline(char *str)
 
 void tokenizeCommandLine(char *cmd, char **arguments)
 {
-	char *token = _strtok(cmd, " ");
+	char *token, *exitArg;
 	int arg_count = 0, exitStatus = 0;
-	char *exitArg;
+	char *f_cmd = _strtok(cmd, ";");
+	while (f_cmd != NULL)
+	{
+	token = _strtok(cmd, " ");
 
-	cmd[strcspn(cmd, "\n")] = '\0';
-
+	f_cmd[_strcspn(f_cmd, "\n")] = '\0';
 	while (token != NULL)
 	{
 		if (_strcmp(token, "exit") == 0)
@@ -98,7 +100,7 @@ void tokenizeCommandLine(char *cmd, char **arguments)
 			{
 				exitStatus = _atoi(exitArg);
 			}
-			free(cmd);
+			free(f_cmd);
 			exit(exitStatus);
 		}
 		else
@@ -107,8 +109,9 @@ void tokenizeCommandLine(char *cmd, char **arguments)
 			token = _strtok(NULL, " ");
 		}
 	}
-
 	arguments[arg_count] = NULL;
+	f_cmd = _strtok(NULL, ";");
+	}
 }
 
 /**
@@ -137,11 +140,10 @@ void performFork(char *cmd, char *arguments[], char **new_environ)
 {
 	char *path[MAX_LEN];
 	char *dir, *key, *value;
-	char *f_path;
+	char *f_path, *env_variable = NULL;
 	int x = 0, i = 0;
 	pid_t pid;
-	char *env_variable = NULL;
-
+	
 	while (new_environ[i] != NULL)
 	{
 		key = _strtok(new_environ[i], "=");
