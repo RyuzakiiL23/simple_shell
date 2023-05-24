@@ -26,7 +26,7 @@ void shell_interactive(void)
 		if (_strcmp(cmd, _exit) == 0)
 		{
 			free(cmd);
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 		if (c_read == EOF)
 		{
