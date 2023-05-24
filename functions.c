@@ -121,7 +121,7 @@ void executeCommand(char *executable, char **arguments)
 {
 	if (execve(executable, arguments, environ) == -1)
 	{
-		perror("");
+		/*perror("");*/
 		exit(2);
 	}
 }
@@ -156,7 +156,7 @@ void performFork(char *cmd, char *arguments[], char **new_environ)
 
 	if (env_variable == NULL)
 	{
-		perror("");
+		/*perror("");*/
 		exit(3);
 	}
 	else
@@ -188,14 +188,14 @@ void performFork(char *cmd, char *arguments[], char **new_environ)
 	}
 	if (dir == NULL)
 	{
-		perror("");
+		/*perror("");*/
 	}
 	else
 	{
 		pid = fork();
 		if (pid == -1)
 		{
-			perror("");
+			/*perror("");*/
 			exit(3);
 		}
 		else if (pid == 0)
