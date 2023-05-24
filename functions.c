@@ -20,7 +20,7 @@ char **env(char **environ);
 
 char **env(char **environ)
 {
-	int environ_count = 0, i, length;/*index;*/
+	int environ_count = 0, i, length;
 	char **new_environ;
 
 	while (environ[environ_count] != NULL)
@@ -38,13 +38,6 @@ char **env(char **environ)
 	}
 
 	new_environ[environ_count] = NULL;
-
-	/*index = 0;
-	while (new_environ[index] != NULL)
-	{
-		index++;
-	}*/
-
 	return (new_environ);
 }
 

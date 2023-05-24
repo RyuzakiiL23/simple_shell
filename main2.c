@@ -5,7 +5,7 @@
 * Return: returns 0 success
 */
 
-void shell_interactive(void)
+void shell_non_interactive(void)
 {
 	size_t buffer = 0;
 	ssize_t c_read;

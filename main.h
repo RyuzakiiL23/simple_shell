@@ -12,6 +12,10 @@
 
 extern char **environ;
 
+void shell_interactive(void);
+void shell_non_interactive(void);
+void shell_interactive(void);
+
 /*--------mainF-------*/
 void removeTrailingNewline(char *str);
 void tokenizeCommandLine(char *cmd, char **arguments);
@@ -31,7 +35,7 @@ ssize_t *_getline(char **lineptr, size_t *n, FILE *filename);
 char **env(char **environ);
 int _atoi(char *s);
 
-size_t my_strspn(const char* str, const char* accept);
-size_t my_strcspn(const char* str, const char* reject);
+size_t _strspn(const char *str, const char *accept);
+size_t _strcspn(const char *str, const char *reject);
 
 #endif

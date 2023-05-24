@@ -23,7 +23,7 @@
 - `main.c` : Function serves as the entry point for the program. It continuously reads user input, tokenizes it, and executes the corresponding command using the aforementioned functions. The shell provides a prompt ($) to indicate readiness for user commands.
 - `functions.c` : The file that hold the functions that will be called in the `main.c`.
 - `str.c strr.c` : Files containing function definition for our own forbiden functions and system calls(strcat, strlen, ...).
-- 
+-
 ## Functionality 🔍
 
 ⚙️ Simple Shell leverages several functions to provide its functionality:
