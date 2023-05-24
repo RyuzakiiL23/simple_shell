@@ -12,38 +12,39 @@ void shell_non_interactive(void)
 	char *_exit = "exit\n", *cmd = NULL;
 	char *arguments[MAX_LEN], **new_environ;
 
-		/*write(1, "$ ", 2);*/
 		fflush(stdout);
 		c_read = getline(&cmd, &buffer, stdin);
 		if (c_read == -1)
 		{
 			write(1, "\n", 1);
 			free(cmd);
-			exit(1);
+			exit(EXIT_SUCCESS);
+		}
+		else
+		{
+		while (*cmd == ' ')
+		{
+			cmd++;
 		}
 		if (_strcmp(cmd, _exit) == 0)
 		{
 			free(cmd);
-			exit(0);
-		}
-		if (c_read == EOF)
-		{
-			write(1, "\n", 1);
-			free(cmd);
-			exit(1);
+			exit(EXIT_SUCCESS);
 		}
 		else if (c_read == EOF)
 		{
 			write(1, "\n", 1);
 			free(cmd);
-			exit(1);
+			exit(EXIT_SUCCESS);
 		}
 		else
+		{
 		new_environ = env(environ);
 		removeTrailingNewline(cmd);
 		tokenizeCommandLine(cmd, arguments);
 		performFork(cmd, arguments, new_environ);
-				free(cmd);
-
-	}
-
+		wait(NULL);
+		}
+		}
+		free(cmd);
+}
