@@ -8,16 +8,30 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 
-#define MAX_LEN 100
+#define MAX_LEN 1024
 
-void _putchar(char c);
-/****************TASK1_PROTOTYPES******************/
+extern char **environ;
 
-void execute_command(char *cmd);
-char *_path(char *cmd);
-void _exec(char *f_path, char *cmd);
+/*--------mainF-------*/
+void removeTrailingNewline(char *str);
+void tokenizeCommandLine(char *cmd, char **arguments);
+void executeCommand(char *executable, char **arguments);
+void performFork(char *cmd, char *arguments[], char **new_environ);
+
+
+/*-------staticLib--------*/
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
+void _putchar(char c);
+char *_strcat(char *dest, char *src);
+int _strcmp(char *s1, char *s2);
+const char *_strchr(const char *s, char c);
+char *_strtok(char *str, const char *delim);
+ssize_t *_getline(char **lineptr, size_t *n, FILE *filename);
+char **env(char **environ);
+int _atoi(char *s);
 
+size_t my_strspn(const char* str, const char* accept);
+size_t my_strcspn(const char* str, const char* reject);
 
 #endif

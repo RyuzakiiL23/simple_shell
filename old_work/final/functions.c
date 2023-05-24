@@ -1,51 +1,71 @@
 #include "main.h"
 
-extern char **environ;
-/*--------------- Function prototypes -----------------*/
-/*void removeTrailingNewline(char  *str);
+/*extern char **environ;*/
+
+/* Function prototypes */
+void removeTrailingNewline(char *str);
 void tokenizeCommandLine(char *cmd, char **arguments);
 void executeCommand(char *executable, char **arguments);
-void performFork(char *cmd, char *arguments[], char **new_environ);*/
+void performFork(char *cmd, char *arguments[], char **new_environ);
+char **env(char **environ);
 
+/* Function definitions */
 
-/*****************DUPLICATING ENVIRON*************************/
+/**
+ * env - Duplicate the environment variables
+ * @environ: The original environment variables
+ *
+ * Return: The duplicated environment variables
+ */
 
-	char **env(char **environ)
+char **env(char **environ)
 {
-	int environ_count = 0, i, length, index;
+	int environ_count = 0, i, length;/*index;*/
 	char **new_environ;
-
 
 	while (environ[environ_count] != NULL)
 	{
 		environ_count++;
 	}
 
-		new_environ = malloc((environ_count + 1) * sizeof(char*));
+	new_environ = malloc((environ_count + 1) * sizeof(char *));
 
-		for (i = 0; i < environ_count; i++)
-		{
-				length = _strlen(environ[i]) + 1;
-				new_environ[i] = malloc(length * sizeof(char));
-				_strcpy(new_environ[i], environ[i]);
-		}
+	for (i = 0; i < environ_count; i++)
+	{
+		length = _strlen(environ[i]) + 1;
+		new_environ[i] = malloc(length * sizeof(char));
+		_strcpy(new_environ[i], environ[i]);
+	}
 
-		new_environ[environ_count] = NULL;
+	new_environ[environ_count] = NULL;
 
-		index = 0;
-		while (new_environ[index] != NULL)
-		{
-				index++;
-		}
-			return (new_environ);
+	/*index = 0;
+	while (new_environ[index] != NULL)
+	{
+		index++;
+	}*/
 
-	for (int i = 0; i < environ_count; i++)
-				free(new_environ[i]);
-			free(new_environ);
-
+	return (new_environ);
 }
-/*--------------- Function definitions-----------------*/
 
+/**
+ * freeEnviron - Free the duplicated environment variables
+ * @environ: The duplicated environment variables
+ */
+
+void freeEnviron(char **environ)
+{
+	int i = 0;
+
+	while (environ[i] != NULL)
+	{
+		free(environ[i]);
+		i++;
+	}
+	free(environ);
+}
+
+/* Other function definitions */
 /**
 * removeTrailingNewline - removes new lines
 * @str: string to be modified
@@ -70,28 +90,28 @@ void removeTrailingNewline(char *str)
 
 void tokenizeCommandLine(char *cmd, char **arguments)
 {
-	cmd[strcspn(cmd, "\n")] = '\0';
-	char *token = strtok(cmd, " ");
-	/*char *executable = token;*/
+	char *token = _strtok(cmd, " ");
 	int arg_count = 0, exitStatus = 0;
 	char *exitArg;
 
+	cmd[strcspn(cmd, "\n")] = '\0';
+
 	while (token != NULL)
 	{
-		if (strcmp(token, "exit") == 0)
+		if (_strcmp(token, "exit") == 0)
 		{
-			exitArg = strtok(NULL, " ");
+			exitArg = _strtok(NULL, " ");
 			if (exitArg != NULL)
 			{
-				exitStatus = atoi(exitArg);
+				exitStatus = _atoi(exitArg);
 			}
 			free(cmd);
 			exit(exitStatus);
 		}
 		else
 		{
-		arguments[arg_count++] = token;
-		token = strtok(NULL, " ");
+			arguments[arg_count++] = token;
+			token = _strtok(NULL, " ");
 		}
 	}
 
@@ -102,7 +122,6 @@ void tokenizeCommandLine(char *cmd, char **arguments)
 * executeCommand - executes the command entered
 * @executable: the command to be executed
 * @arguments: the arguments passed to our executable
-* @envp: the environment
 */
 
 void executeCommand(char *executable, char **arguments)
@@ -118,7 +137,7 @@ void executeCommand(char *executable, char **arguments)
 * performFork - forks to get two processes
 * @cmd: our command
 * @arguments: the arguments passed
-* @envp: the environment
+* @new_environ: the environment
 */
 
 void performFork(char *cmd, char *arguments[], char **new_environ)
@@ -129,7 +148,6 @@ void performFork(char *cmd, char *arguments[], char **new_environ)
 	int x = 0, i = 0;
 	pid_t pid;
 	char *env_variable = NULL;
-
 
 	while (new_environ[i] != NULL)
 	{
@@ -157,23 +175,23 @@ void performFork(char *cmd, char *arguments[], char **new_environ)
 	dir = _strtok(path[0], ":");
 	while (dir != NULL)
 	{
-		f_path =malloc(_strlen(dir) + _strlen(cmd) + 2);
+		f_path = malloc(_strlen(dir) + _strlen(cmd) + 2);
 		if (cmd[x] == '/')
 		{
-			strcpy(f_path, cmd);
+			_strcpy(f_path, cmd);
 		}
 		else
 		{
-		_strcpy(f_path, dir);
-		_strcat(f_path, "/");
-		_strcat(f_path, cmd);
+			_strcpy(f_path, dir);
+			_strcat(f_path, "/");
+			_strcat(f_path, cmd);
 		}
 		if (access(f_path, F_OK) == 0)
 		{
 			break;
 		}
-	free(f_path);
-	dir = _strtok(NULL, ":");
+		free(f_path);
+		dir = _strtok(NULL, ":");
 	}
 	if (dir == NULL)
 	{
@@ -181,19 +199,24 @@ void performFork(char *cmd, char *arguments[], char **new_environ)
 	}
 	else
 	{
-	pid = fork();
-	if (pid == -1)
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("");
+			exit(3);
+		}
+		else if (pid == 0)
+		{
+			executeCommand(f_path, arguments);
+		}
+		else
+		{
+			wait(NULL);
+		}
+	}
+	if (dir != NULL)
 	{
-		perror("");
-		exit(3);
+		free(f_path);
 	}
-	else if (pid == 0)
-	{
-		executeCommand(f_path, arguments);
-	}
-	else
-	{
-		wait(NULL);
-	}
-	}
+	freeEnviron(new_environ);
 }
