@@ -1,8 +1,8 @@
 #include "main.h"
 
 /**
-* main - Simple shell
-* Return: returns 0 success
+* shell_non_interactive - non interactive simple shell
+* Return: returns nothing
 */
 
 void shell_non_interactive(void)
