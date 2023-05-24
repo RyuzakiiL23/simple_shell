@@ -21,7 +21,7 @@ void shell_interactive(void)
 		{
 			write(1, "\n", 1);
 			free(cmd);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		if (_strcmp(cmd, _exit) == 0)
 		{
