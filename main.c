@@ -14,31 +14,29 @@ void shell_interactive(void)
 
 	while (1)
 	{
-		write(1, "$ ", 2);
+		write(STDOUT_FILENO, "$ ", 2);
 		fflush(stdout);
 		c_read = getline(&cmd, &buffer, stdin);
+		while (*cmd == ' ')
+		{
+			cmd++;
+		}
 		if (c_read == -1)
 		{
-			write(1, "\n", 1);
+			write(STDOUT_FILENO, "\n", 1);
 			free(cmd);
-			exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
 		}
 		if (_strcmp(cmd, _exit) == 0)
 		{
 			free(cmd);
-			exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
 		}
 		if (c_read == EOF)
 		{
 			write(1, "\n", 1);
 			free(cmd);
-			exit(1);
-		}
-		else if (c_read == EOF)
-		{
-			write(1, "\n", 1);
-			free(cmd);
-			exit(1);
+			exit(EXIT_SUCCESS);
 		}
 		else
 		new_environ = env(environ);

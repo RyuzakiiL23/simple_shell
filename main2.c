@@ -12,9 +12,7 @@ void shell_non_interactive(void)
 	char *_exit = "exit\n", *cmd = NULL;
 	char *arguments[MAX_LEN], **new_environ;
 
-	while (1)
-	{
-		write(1, "$ ", 2);
+		/*write(1, "$ ", 2);*/
 		fflush(stdout);
 		c_read = getline(&cmd, &buffer, stdin);
 		if (c_read == -1)
@@ -45,6 +43,7 @@ void shell_non_interactive(void)
 		removeTrailingNewline(cmd);
 		tokenizeCommandLine(cmd, arguments);
 		performFork(cmd, arguments, new_environ);
+				free(cmd);
+
 	}
-	free(cmd);
-}
+

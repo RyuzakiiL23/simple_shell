@@ -101,6 +101,16 @@ void tokenizeCommandLine(char *cmd, char **arguments)
 			free(cmd);
 			exit(exitStatus);
 		}
+		/*else if (_strcmp(token, " ") == 0)
+		{
+			exitArg = _strtok(NULL, " ");
+			if (exitArg != NULL)
+			{
+				exitStatus = _atoi(exitArg);
+			}
+			free(cmd);
+			exit(exitStatus);
+			}*/
 		else
 		{
 			arguments[arg_count++] = token;
