@@ -27,7 +27,10 @@ void shell_non_interactive(void)
 		trimmed_cmd = cmd;
 		while (*trimmed_cmd == ' ')
 			trimmed_cmd++;
-
+		if (*trimmed_cmd == '\n')
+		{
+			continue;
+		}
 		new_environ = env(environ);
 		removeTrailingNewline(trimmed_cmd);
 		tokenizeCommandLine(trimmed_cmd, arguments);
