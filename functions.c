@@ -69,7 +69,7 @@ void removeTrailingNewline(char *str)
 {
 	int length = _strlen(str);
 
-	while (length > 0 && (str[length - 1] == '\n'))/* || str[length - 1] == '\r'))*/
+	while (length > 0 && (str[length - 1] == '\n' || str[length - 1] == '\r'))
 	{
 		str[--length] = '\0';
 	}
