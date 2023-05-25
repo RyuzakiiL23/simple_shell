@@ -1,9 +1,14 @@
 #include "main.h"
 
+/**
+* shell_interactive - interactive simple shell
+* Return: nthing
+*/
+
 void shell_interactive(void)
 {
 	size_t buffer = 0, c_read;
-	char *_exit = "exit\n", *cmd = NULL, *trimmed_cmd;
+	char *_exit = "exit\n", *cmd = NULL;
 	char *arguments[MAX_LEN], **new_environ;
 
 	while (1)
@@ -11,7 +16,7 @@ void shell_interactive(void)
 		write(STDOUT_FILENO, "$ ", 2);
 		fflush(stdout);
 		c_read = getline(&cmd, &buffer, stdin);
-		if (c_read == (unsigned long int)-1)
+		if (c_read == (unsigned long int) -1)
 		{
 			write(STDOUT_FILENO, "\n", 1);
 			free(cmd);
@@ -19,29 +24,27 @@ void shell_interactive(void)
 		}
 		else
 		{
+			while (*cmd == ' ')
+			{
+				cmd++;
+			}
 			if (_strcmp(cmd, _exit) == 0)
 			{
 				free(cmd);
 				exit(EXIT_SUCCESS);
 			}
-			if (c_read == (unsigned long int)EOF)
+			if (c_read == (unsigned long int) EOF)
 			{
 				write(1, "\n", 1);
 				free(cmd);
 				exit(EXIT_SUCCESS);
 			}
-
-			trimmed_cmd = cmd;
-			while (*trimmed_cmd == ' ')
-			{
-				trimmed_cmd++;
-			}
-
 			new_environ = env(environ);
-			removeTrailingNewline(trimmed_cmd);
-			tokenizeCommandLine(trimmed_cmd, arguments);
-			performFork(trimmed_cmd, arguments, new_environ);
+			removeTrailingNewline(cmd);
+			tokenizeCommandLine(cmd, arguments);
+			performFork(cmd, arguments, new_environ);
 			wait(NULL);
 		}
 	}
+	free(cmd);
 }

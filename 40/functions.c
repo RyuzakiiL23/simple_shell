@@ -170,7 +170,7 @@ void performFork(char *cmd, char *arguments[], char **new_environ)
 	dir = _strtok(path[0], ":");
 	while (dir != NULL)
 	{
-		f_path = malloc(_strlen(dir) + _strlen(cmd) * 2 + 2);
+		f_path = malloc(_strlen(dir) + _strlen(cmd) + 2);
 		if (cmd[x] == '/')
 		{
 			_strcpy(f_path, cmd);
