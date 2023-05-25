@@ -38,4 +38,10 @@ int _atoi(char *s);
 size_t _strspn(const char *str, const char *accept);
 size_t _strcspn(const char *str, const char *reject);
 
+/***********HANDLER*****************/
+
+void handleCommand(char *cmd, char **new_environ);
+ssize_t readCommand(char **cmd, size_t *buffer);
+void prompt(void);
+
 #endif
