@@ -86,34 +86,59 @@ void tokenizeCommandLine(char *cmd, char **arguments)
 	char *token, *exitArg;
 	int arg_count = 0, exitStatus = 0;
 	char *f_cmd = _strtok(cmd, ";");
+	size_t len;
 
 	while (f_cmd != NULL)
 	{
-	token = _strtok(cmd, " ");
+		len = _strlen(f_cmd);
 
-	f_cmd[_strcspn(f_cmd, "\n")] = '\0';
-	while (token != NULL)
-	{
-		if (_strcmp(token, "exit") == 0)
+		while (len > 0 && f_cmd[len - 1] == ' ')
 		{
-			exitArg = _strtok(NULL, " ");
-			if (exitArg != NULL)
+			f_cmd[--len] = '\0';
+		}
+
+		if (_strchr(f_cmd, '/') == NULL)
+		{
+			token = _strtok(f_cmd, " ");
+			f_cmd[_strcspn(f_cmd, "\n")] = '\0';
+
+			while (token != NULL)
 			{
-				exitStatus = _atoi(exitArg);
+				if (_strcmp(token, "exit") == 0)
+				{
+					exitArg = _strtok(NULL, " ");
+					if (exitArg != NULL)
+					{
+						exitStatus = _atoi(exitArg);
+					}
+					free(f_cmd);
+					exit(exitStatus);
+				}
+				else
+				{
+					arguments[arg_count++] = token;
+					token = _strtok(NULL, " ");
+				}
 			}
-			free(f_cmd);
-			exit(exitStatus);
+			arguments[arg_count] = NULL;
+			f_cmd = _strtok(NULL, ";");
 		}
 		else
 		{
-			arguments[arg_count++] = token;
-			token = _strtok(NULL, " ");
+			token = _strtok(f_cmd, " ");
+			f_cmd[_strcspn(f_cmd, "\n")] = '\0';
+
+			while (token != NULL)
+			{
+				arguments[arg_count++] = token;
+				token = _strtok(NULL, " ");
+			}
+			arguments[arg_count] = NULL;
+			f_cmd = _strtok(NULL, ";");
 		}
 	}
-	arguments[arg_count] = NULL;
-	f_cmd = _strtok(NULL, ";");
-	}
 }
+
 
 /**
 * executeCommand - executes the command entered
