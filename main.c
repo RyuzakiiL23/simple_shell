@@ -16,6 +16,10 @@ void shell_interactive(void)
 		write(STDOUT_FILENO, "$ ", 2);
 		fflush(stdout);
 		c_read = getline(&cmd, &buffer, stdin);
+		if (*cmd == '\n')
+		{
+			continue;
+		}
 		if (c_read == (unsigned long int)-1)
 		{
 			write(STDOUT_FILENO, "\n", 1);

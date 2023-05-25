@@ -14,6 +14,10 @@ void shell_non_interactive(void)
 
 	while ((c_read = getline(&cmd, &buffer, stdin)) != -1)
 	{
+		if (*cmd == '\n')
+		{
+			continue;
+		}
 		if (_strcmp(cmd, _exit) == 0)
 		{
 			free(cmd);
