@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+* shell_interactive - non interactive simple shell
+* Return: returns nothing
+*/
+
 void shell_interactive(void)
 {
 	size_t buffer = 0, c_read;
@@ -30,13 +35,11 @@ void shell_interactive(void)
 				free(cmd);
 				exit(EXIT_SUCCESS);
 			}
-
 			trimmed_cmd = cmd;
 			while (*trimmed_cmd == ' ')
 			{
 				trimmed_cmd++;
 			}
-
 			new_environ = env(environ);
 			removeTrailingNewline(trimmed_cmd);
 			tokenizeCommandLine(trimmed_cmd, arguments);

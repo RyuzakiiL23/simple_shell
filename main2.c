@@ -19,7 +19,7 @@ void shell_non_interactive(void)
 		free(cmd);
 		exit(EXIT_SUCCESS);
 	}
-	else 
+	else
 		{
 		if (_strcmp(cmd, _exit) == 0)
 		{

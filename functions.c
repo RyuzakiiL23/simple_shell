@@ -86,6 +86,7 @@ void tokenizeCommandLine(char *cmd, char **arguments)
 	char *token, *exitArg;
 	int arg_count = 0, exitStatus = 0;
 	char *f_cmd = _strtok(cmd, ";");
+
 	while (f_cmd != NULL)
 	{
 	token = _strtok(cmd, " ");
@@ -143,7 +144,7 @@ void performFork(char *cmd, char *arguments[], char **new_environ)
 	char *f_path, *env_variable = NULL;
 	int x = 0, i = 0;
 	pid_t pid;
-	
+
 	while (new_environ[i] != NULL)
 	{
 		key = _strtok(new_environ[i], "=");
