@@ -151,7 +151,7 @@ void executeCommand(char *executable, char **arguments)
 	if (execve(executable, arguments, environ) == -1)
 	{
 		perror("");
-		exit(2);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -185,7 +185,7 @@ void performFork(char *cmd, char *arguments[], char **new_environ)
 	if (env_variable == NULL)
 	{
 		perror("");
-		exit(3);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -224,7 +224,7 @@ void performFork(char *cmd, char *arguments[], char **new_environ)
 		if (pid == -1)
 		{
 			/*perror("");*/
-			exit(3);
+			exit(EXIT_FAILURE);
 		}
 		else if (pid == 0)
 		{

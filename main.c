@@ -17,9 +17,6 @@ void shell_interactive(void)
 		prompt();
 		c_read = readCommand(&cmd, &buffer);
 
-		if (*cmd == '\n')
-			continue;
-
 		if (c_read == (ssize_t)-1)
 		{
 			write(STDOUT_FILENO, "\n", 1);
