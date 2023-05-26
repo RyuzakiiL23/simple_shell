@@ -14,7 +14,7 @@ extern char **environ;
 
 void shell_interactive(void);
 void shell_non_interactive(void);
-void shell_interactive(void);
+/*void shell_interactive(void);*/
 
 /*--------mainF-------*/
 void removeTrailingNewline(char *str);

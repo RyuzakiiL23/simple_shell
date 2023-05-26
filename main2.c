@@ -38,7 +38,7 @@ void shell_non_interactive(void)
 		wait(NULL);
 	}
 
-	write(1, "\n", 1);
+	/*write(1, "\n", 1);*/
 	free(cmd);
 	exit(EXIT_SUCCESS);
 }
